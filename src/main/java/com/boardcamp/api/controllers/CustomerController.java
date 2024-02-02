@@ -43,7 +43,10 @@ public class CustomerController {
 
   @GetMapping("/{id}")
   public ResponseEntity<CustomerModel> getCustomer(@PathVariable Long id) {
+    if(!customerService.existsById(id)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    CustomerModel customer = customerService.findById(id);
+    return ResponseEntity.status(HttpStatus.OK).body(customer);
   }
-  
-  
 }

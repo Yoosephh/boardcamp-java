@@ -24,4 +24,12 @@ public class CustomerService {
   public boolean existsByCpf(String cpf) {
     return customerRepository.existsByCpf(cpf);
   }
+
+  public boolean existsById(Long id) {
+    return  customerRepository.existsById(id);
+  }
+
+  public CustomerModel findById(Long id) {
+    return customerRepository.findById(id).get();
+  }
 }
