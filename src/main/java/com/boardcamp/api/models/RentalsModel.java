@@ -40,6 +40,6 @@ public class RentalsModel {
   @Column(nullable = false)
   private Long daysRented;
 
-  @Column(nullable = false)
+  @Column
   private Optional<LocalDate> returnDate;
 }
