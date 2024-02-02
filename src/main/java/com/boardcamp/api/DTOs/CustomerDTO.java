@@ -4,8 +4,9 @@ package com.boardcamp.api.DTOs;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
-
+@Data
 public class CustomerDTO {
   @NotBlank(message = "name  cannot be blank or null")
   private String name;

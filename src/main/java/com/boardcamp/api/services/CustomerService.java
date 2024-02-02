@@ -2,6 +2,7 @@ package com.boardcamp.api.services;
 
 import org.springframework.stereotype.Service;
 
+import com.boardcamp.api.DTOs.CustomerDTO;
 import com.boardcamp.api.models.CustomerModel;
 import com.boardcamp.api.repositories.CustomerRepository;
 
@@ -14,9 +15,13 @@ public class CustomerService {
     this.customerRepository = customerRepository;
   }
 
-  public CustomerModel save(body) {
+  public CustomerModel save(CustomerDTO body) {
     CustomerModel user = new CustomerModel(body);
 
-    return customerRepository.save(user)
+    return customerRepository.save(user);
+  }
+
+  public boolean existsByCpf(String cpf) {
+    return customerRepository.existsByCpf(cpf);
   }
 }
