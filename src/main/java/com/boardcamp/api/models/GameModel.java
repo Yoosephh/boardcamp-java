@@ -1,5 +1,7 @@
 package com.boardcamp.api.models;
 
+import com.boardcamp.api.DTOs.GameDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +18,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "games")
 public class GameModel {
+
+  public GameModel(GameDTO game) {
+    this.image = game.getImage();
+    this.name =  game.getName();
+    this.pricePerDay = game.getPricePerDay();
+    this.stockTotal = game.getStockTotal();
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -1,6 +1,7 @@
 package com.boardcamp.api.DTOs;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
@@ -11,9 +12,11 @@ public class GameDTO {
 
   private String image;
   
+  @NotNull(message = "field stockTotal is required")
   @Positive(message = "stockTotal should be greater than zero.")
   private Long stockTotal;
 
+  @NotNull(message = "field pricePerDay is required")
   @Positive(message = "pricePerDay should be greater than zero.")
   private Long pricePerDay;
 }

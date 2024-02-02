@@ -1,13 +1,13 @@
 package com.boardcamp.api.DTOs;
 
-import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 
 public class CustomerDTO {
-  
+  @NotBlank(message = "name  cannot be blank or null")
   private String name;
 
   @Size(min = 11, max = 11, message= "Provide a CPF in the '00000000000' format.")
