@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.boardcamp.api.DTOs.RentalDTO;
 import com.boardcamp.api.errors.ClosedRentalError;
+import com.boardcamp.api.errors.NotFoundError;
+import com.boardcamp.api.errors.UnprocessableEntityError;
 import com.boardcamp.api.models.CustomerModel;
 import com.boardcamp.api.models.GameModel;
 import com.boardcamp.api.models.RentalsModel;
@@ -31,14 +33,30 @@ public class RentalService{
   }
 
   public RentalsModel save(RentalDTO body) {
+    if(!customerRepository.existsById(body.getCustomerId())) {
+      throw new NotFoundError("No user found for given id.");
+    }
+
+    if(!gamesRepository.existsById(body.getGameId())) {
+      throw new NotFoundError("No game found for given id.");
+    }
+
     CustomerModel customer = customerRepository.findById(body.getCustomerId()).get();
     GameModel game = gamesRepository.findById(body.getGameId()).get();
+
+    if(game.getStockTotal() == 0) {
+      throw new UnprocessableEntityError("No stock avaliable for this game.");
+    }
+    Long gameCurrentStock = game.getStockTotal();
+    game.setStockTotal(gameCurrentStock - 1);
+
     RentalsModel rental = new RentalsModel(body, customer, game);
 
     Long daysRented = rental.getDaysRented();
     Long pricePerDay = game.getPricePerDay();
     Long originalPrice = pricePerDay * daysRented;
     rental.setOriginalPrice(originalPrice);
+    
 
     return  rentalsRepository.save(rental);
   }
@@ -52,6 +70,10 @@ public class RentalService{
   }
 
   public RentalsModel close( Long id) {
+    if(!rentalsRepository.existsById(id)) {
+      throw new NotFoundError("No open rental was found for given id.");
+    }
+    
     RentalsModel rental = rentalsRepository.findById(id).get();
 
     if(rental.getReturnDate() != null) throw new ClosedRentalError("The rental is already closed!");

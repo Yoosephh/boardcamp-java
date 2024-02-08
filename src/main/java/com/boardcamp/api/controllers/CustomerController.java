@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.boardcamp.api.DTOs.CustomerDTO;
+import com.boardcamp.api.errors.ConflictError;
+import com.boardcamp.api.errors.NotFoundError;
 import com.boardcamp.api.models.CustomerModel;
 import com.boardcamp.api.services.CustomerService;
 
@@ -34,7 +36,7 @@ public class CustomerController {
   @PostMapping
   public ResponseEntity<CustomerModel> createCustomer(@RequestBody @Valid CustomerDTO body) {
     if(customerService.existsByCpf(body.getCpf())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      throw new ConflictError("The provided CPF is already registered.");
     }
 
     CustomerModel customer = customerService.save(body);
@@ -44,7 +46,7 @@ public class CustomerController {
   @GetMapping("/{id}")
   public ResponseEntity<CustomerModel> getCustomer(@PathVariable Long id) {
     if(!customerService.existsById(id)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundError("No customer found for such id.");
     }
 
     CustomerModel customer = customerService.findById(id);

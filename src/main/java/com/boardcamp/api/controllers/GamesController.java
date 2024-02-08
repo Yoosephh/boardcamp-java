@@ -3,6 +3,7 @@ package com.boardcamp.api.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.boardcamp.api.DTOs.GameDTO;
+import com.boardcamp.api.errors.ConflictError;
 import com.boardcamp.api.models.GameModel;
 import com.boardcamp.api.services.GamesService;
 
@@ -34,7 +35,7 @@ public class GamesController {
   public ResponseEntity<GameModel> createGame(@RequestBody @Valid GameDTO body) {
 
     if(gamesService.existsByName(body.getName())){ 
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      throw new ConflictError("The provided name for game is unavaliable, pick a new one.");
     }
 
     GameModel game = gamesService.save(body);
