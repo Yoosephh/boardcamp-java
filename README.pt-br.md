@@ -12,7 +12,9 @@ O deploy da aplicação foi realizado no [Render](https://boardcamp-api-2uls.onr
 
 * PostgreSQL:  Banco de dados relacional para armazenamento (persistência) e manipulação dos dados;
 
-* Spring Data JPA (Java Persistence API):  Interface de acesso ao banco de dados, responsável por mapear as entidades dos modelos as tabelas do banco de dados, simplificando a interação com o banco;
+* Spring Data JPA (Java Persistence API):  Interface de acesso ao banco de dados, responsável por mapear as entidades dos modelos e as tabelas do banco de dados, simplificando a interação com o banco;
+
+* Hibernate (ORM):  Framework para acesso ao banco de dados, responsável por mapear as classes do modelo de domínio para as tabelas do banco de dados;
 
 ## Camadas  da Aplicação
 

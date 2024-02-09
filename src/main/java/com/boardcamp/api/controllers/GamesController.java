@@ -34,10 +34,6 @@ public class GamesController {
   @PostMapping
   public ResponseEntity<GameModel> createGame(@RequestBody @Valid GameDTO body) {
 
-    if(gamesService.existsByName(body.getName())){ 
-      throw new ConflictError("The provided name for game is unavaliable, pick a new one.");
-    }
-
     GameModel game = gamesService.save(body);
     return ResponseEntity.status(HttpStatus.CREATED).body(game);
   }
